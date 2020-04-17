@@ -25,30 +25,47 @@ const section4 = document.getElementById('section4');
 
 console.log('Navbar ' + navbar.id);
 
-document.addEventListener('click', function(){
+document.addEventListener('scroll', function(){
 const navbarHeight = navbar.offsetHeight;
 const screenHeight = window.innerHeight;
 // console.log('Navbar Height:' + navbarHeight  + 'px');
 console.log(window.innerHeight);
 if(((section1.getBoundingClientRect().y + navbarHeight)>0) & ((section1.getBoundingClientRect().y + navbarHeight)<screenHeight)){
     console.log('Section1 is currently viewed');
+    document.getElementById('section1ListItem').classList.add('active');
+    document.getElementById('section2ListItem').classList.remove('active');
+    document.getElementById('section3ListItem').classList.remove('active');
+    document.getElementById('section4ListItem').classList.remove('active');
 }
-else  console.log('Section1 outside of view');
-
-if(((section2.getBoundingClientRect().y + navbarHeight)>0) & ((section2.getBoundingClientRect().y + navbarHeight)<screenHeight)){
-    console.log('Section2 is currently viewed');
+else if(((section2.getBoundingClientRect().y + navbarHeight)>0) & ((section2.getBoundingClientRect().y + navbarHeight)<screenHeight)){
+    console.log('Section2 is currently viewed')
+    document.getElementById('section1ListItem').classList.remove('active');
+    document.getElementById('section2ListItem').classList.add('active');
+    document.getElementById('section3ListItem').classList.remove('active');
+    document.getElementById('section4ListItem').classList.remove('active');
 }
-else  console.log('Section2 outside of view');
 
-if(((section3.getBoundingClientRect().y + navbarHeight)>0) & ((section3.getBoundingClientRect().y + navbarHeight)<screenHeight)){
+
+else if(((section3.getBoundingClientRect().y + navbarHeight)>0) & ((section3.getBoundingClientRect().y + navbarHeight)<screenHeight)){
     console.log('Section3 is currently viewed');
+    document.getElementById('section1ListItem').classList.remove('active');
+    document.getElementById('section2ListItem').classList.remove('active');
+    document.getElementById('section3ListItem').classList.add('active');
+    document.getElementById('section4ListItem').classList.remove('active');
+    
 }
-else  console.log('Section3 outside of view');
 
-if(((section4.getBoundingClientRect().y + navbarHeight)>0) & ((section4.getBoundingClientRect().y + navbarHeight)<screenHeight)){
+
+else if(((section4.getBoundingClientRect().y + navbarHeight)>0) & ((section4.getBoundingClientRect().y + navbarHeight)<screenHeight)){
     console.log('Section4 is currently viewed');
+    document.getElementById('section1ListItem').classList.remove('active');
+    document.getElementById('section2ListItem').classList.remove('active');
+    document.getElementById('section3ListItem').classList.remove('active');
+    document.getElementById('section4ListItem').classList.add('active');
 }
-else  console.log('Section4 outside of view');
+
+
+
 
 // console.log('Section1 Top Position: ' + section1.getBoundingClientRect().y);
 // console.log('Section1 Bottom Position: ' + document.getElementById('section1').getBoundingClientRect().bottom);
@@ -60,8 +77,6 @@ else  console.log('Section4 outside of view');
 // console.log('Section4 Bottom Position: ' + document.getElementById('section4').getBoundingClientRect().bottom);
 });
 
-
-document.getElementById('section1');
 /**
  * End Global Variables
  * Start Helper Functions
@@ -116,6 +131,7 @@ for (let sec of sectionList){
     // Creating a new list item and storeit  in the constant "item"
     const item = document.createElement('li');
     item.textContent = heading;
+    item.setAttribute("id", sec.dataset.nav);
     navbar.appendChild(item);
     item.addEventListener('click', function(){
         sec.scrollIntoView({ block: 'start',  behavior: 'smooth' });
