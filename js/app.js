@@ -21,51 +21,70 @@ const section1 = document.getElementById('section1');
 const section2 = document.getElementById('section2');
 const section3 = document.getElementById('section3');
 const section4 = document.getElementById('section4');
+let activeSection;
 
 
-console.log('Navbar ' + navbar.id);
-
-document.addEventListener('scroll', function(){
-const navbarHeight = navbar.offsetHeight;
-const screenHeight = window.innerHeight;
-// console.log('Navbar Height:' + navbarHeight  + 'px');
-console.log(window.innerHeight);
-if(((section1.getBoundingClientRect().y + navbarHeight)>0) & ((section1.getBoundingClientRect().y + navbarHeight)<screenHeight)){
-    console.log('Section1 is currently viewed');
-    document.getElementById('section1ListItem').classList.add('active');
-    document.getElementById('section2ListItem').classList.remove('active');
-    document.getElementById('section3ListItem').classList.remove('active');
-    document.getElementById('section4ListItem').classList.remove('active');
-}
-else if(((section2.getBoundingClientRect().y + navbarHeight)>0) & ((section2.getBoundingClientRect().y + navbarHeight)<screenHeight)){
-    console.log('Section2 is currently viewed')
-    document.getElementById('section1ListItem').classList.remove('active');
-    document.getElementById('section2ListItem').classList.add('active');
-    document.getElementById('section3ListItem').classList.remove('active');
-    document.getElementById('section4ListItem').classList.remove('active');
-}
 
 
-else if(((section3.getBoundingClientRect().y + navbarHeight)>0) & ((section3.getBoundingClientRect().y + navbarHeight)<screenHeight)){
-    console.log('Section3 is currently viewed');
-    document.getElementById('section1ListItem').classList.remove('active');
-    document.getElementById('section2ListItem').classList.remove('active');
-    document.getElementById('section3ListItem').classList.add('active');
-    document.getElementById('section4ListItem').classList.remove('active');
+function checkActiveSection(scrollEvent){
+    const navbarHeight = navbar.offsetHeight;
+    const screenHeight = window.innerHeight;
+    if(((section1.getBoundingClientRect().y + navbarHeight)>0) & ((section1.getBoundingClientRect().y)<screenHeight)){
+        if(activeSection!="section1"){
+            document.getElementById('section1ListItem').classList.add('active');
+            document.getElementById('section2ListItem').classList.remove('active');
+            document.getElementById('section3ListItem').classList.remove('active');
+            document.getElementById('section4ListItem').classList.remove('active');
+            activeSection = "section1";
+        }
+        else{ 
+            return
+        }
+    }
+    else if(((section2.getBoundingClientRect().y + navbarHeight)>0) & ((section2.getBoundingClientRect().y)<screenHeight)){
+        if(activeSection!="section2"){
+            document.getElementById('section1ListItem').classList.remove('active');
+            document.getElementById('section2ListItem').classList.add('active');
+            document.getElementById('section3ListItem').classList.remove('active');
+            document.getElementById('section4ListItem').classList.remove('active');
+            activeSection = "section2";
+        }
+        else{ 
+            return
+        }
+    }
     
-}
+    else if(((section3.getBoundingClientRect().y + navbarHeight)>0) & ((section3.getBoundingClientRect().y)<screenHeight)){
+        if(activeSection!="section3"){
+            document.getElementById('section1ListItem').classList.remove('active');
+            document.getElementById('section2ListItem').classList.remove('active');
+            document.getElementById('section3ListItem').classList.add('active');
+            document.getElementById('section4ListItem').classList.remove('active');
+            activeSection = "section3";
+            scrollEvent.stopPropagation(); 
+        }
+        else{ 
+            return
+        }
+    }    
+    
+    else if(((section4.getBoundingClientRect().y + navbarHeight)>0) & ((section4.getBoundingClientRect().y)<screenHeight)){
+        if(activeSection!="section4"){
+            document.getElementById('section1ListItem').classList.remove('active');
+            document.getElementById('section2ListItem').classList.remove('active');
+            document.getElementById('section3ListItem').classList.remove('active');
+            document.getElementById('section4ListItem').classList.add('active');
+            activeSection = "section4";
+            scrollEvent.stopPropagation(); 
+        }
+        else{ 
+            return
+        }
+    }
+};
 
 
-else if(((section4.getBoundingClientRect().y + navbarHeight)>0) & ((section4.getBoundingClientRect().y + navbarHeight)<screenHeight)){
-    console.log('Section4 is currently viewed');
-    document.getElementById('section1ListItem').classList.remove('active');
-    document.getElementById('section2ListItem').classList.remove('active');
-    document.getElementById('section3ListItem').classList.remove('active');
-    document.getElementById('section4ListItem').classList.add('active');
-}
-
-
-
+document.addEventListener('scroll', checkActiveSection, true);
 
 // console.log('Section1 Top Position: ' + section1.getBoundingClientRect().y);
 // console.log('Section1 Bottom Position: ' + document.getElementById('section1').getBoundingClientRect().bottom);
@@ -75,7 +94,7 @@ else if(((section4.getBoundingClientRect().y + navbarHeight)>0) & ((section4.get
 // console.log('Section3 Bottom Position: ' + document.getElementById('section3').getBoundingClientRect().bottom);
 // console.log('Section4 Top Position: ' + document.getElementById('section4').getBoundingClientRect().y);
 // console.log('Section4 Bottom Position: ' + document.getElementById('section4').getBoundingClientRect().bottom);
-});
+
 
 /**
  * End Global Variables
@@ -123,11 +142,9 @@ else if(((section4.getBoundingClientRect().y + navbarHeight)>0) & ((section4.get
 
 
 for (let sec of sectionList){
-    console.log('section Id ' + sec.id);
     //  Populating the "heading" constant with the Text content of the collected heading  
     const heading = sec.querySelector('h2').textContent;
     //  Debug heading content   
-    console.log('heading ' + heading);
     // Creating a new list item and storeit  in the constant "item"
     const item = document.createElement('li');
     item.textContent = heading;
